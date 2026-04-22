@@ -3,12 +3,14 @@ from constants import *
 from circleshape import *
 from shot import *
 
+# Class for the Player Character
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x,  y, PLAYER_RADIUS)
         self.rotation = 0
         self.cd_timer = 0
     
+    # Creates a triangle hitbox 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
@@ -17,9 +19,11 @@ class Player(CircleShape):
         c = self.position - forward * self.radius + right
         return [a, b, c]
 
+    # Rotate the Player model
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
 
+    # Key bindings
     def update(self, dt):
         keys = pygame.key.get_pressed()
 
@@ -44,12 +48,14 @@ class Player(CircleShape):
         
         self.cd_timer -= dt
 
+    # Move the player model across the screen
     def move(self, dt):
         unit_vector = pygame.Vector2(0, 1)
         rotated_vector = unit_vector.rotate(self.rotation)
         rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * dt
         self.position += rotated_with_speed_vector
 
+    # Allows Player to shoot a bullet
     def shoot(self):
         x, y = self.position
         shot = Shot(x, y)

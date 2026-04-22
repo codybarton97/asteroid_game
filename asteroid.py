@@ -3,19 +3,19 @@ from circleshape import *
 from logger import *
 import random
 
+# Class for Asteroid obstacles
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
         self.center = (x, y)
         
-        
     def draw(self, screen):
-
         pygame.draw.circle(screen, "white", self.position, self.radius, LINE_WIDTH)
 
     def update(self, dt):
         self.position += (self.velocity * dt)
-
+        
+    # Split the asteroids when hit with a bullet
     def split(self):
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
